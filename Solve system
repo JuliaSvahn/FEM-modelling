@@ -1,0 +1,19 @@
+def solve_gsm(K, F, fixed_dofs):
+    """
+    Solving GSM system for displacements and reactions.
+
+    Elements:
+    K -> Global stiffness matrix
+    F -> Force
+    fixed_dofs -> dofs used to solve system
+    """
+
+    n_dof = K.shape[0] #No of dofs in total
+    fixed_dofs = np.asarray(fixed_dofs) #No of dofs for solving the system
+    free_dofs = np.setdiff1d(np.arange(n_dof), fixed_dofs) #All dofs that aren't required for the 
+
+    u = np.zeros(n_dof)
+    u[free_dofs] = np.linalg.solve(K[np.ix_(free_dofs, free_dofs)], F[free_dofs])
+
+    RF = K @ u - F     
+    return u, RF
