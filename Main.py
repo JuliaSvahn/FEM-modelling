@@ -69,8 +69,10 @@ with open(filepath, "r") as f:
 
 # getting the length for each element then using element stiffness matrix
 element_lengths = {}
+element_angles = {}
 rotation_matrices = {}
-K_local_list = []
+k_local_list = []
+
 
 for elid, element in elements.items():
 
@@ -86,10 +88,17 @@ for elid, element in elements.items():
 
     element_lengths[elid] = L
 
-    k_local = modelling.ESM.local_coordinate_system_element_stiffness_matrix(E, area, L)
+    k_local = modelling.ESM.local_ESM(E, area, L)
+    k_local_4x4 = np.zeros((4, 4))
+    k_local_4x4[0, 0] = k_local[0, 0]
+    k_local_4x4[0, 2] = k_local[0, 1]
+    k_local_4x4[2, 0] = k_local[1, 0]
+    k_local_4x4[2, 2] = k_local[1, 1]
 
-    T, theta = modelling.transformation(x1, x2, y1, y2)
-
+    T, theta = modelling.Rotation_matrix.Rotation(x1, x2, y1, y2)
+    rotation_matrices[elid] = T
     element_angles[elid] = theta
+
+    k_local_list.append(T @ k_local_4x4 @ T.T)
 
 k_global = modelling.GSM.GSM_assembly(elements, nodes, dof_node = 2, ) #hello
