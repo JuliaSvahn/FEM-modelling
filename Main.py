@@ -2,17 +2,18 @@ import math
 import numpy as np
 import os
 
-import modelling.ESM
-import modelling.GSM
-import modelling.Transformation_matrix
-import modelling.Solve_system
-import modelling.Post_prosessing
+import ESM
+import GSM
+import Transformation_matrix
+import Solve_system
+import Post_prosessing
 
 
-nodes = {}
-elements = {}
-BCs = {}
-loads = {}
+
+nodes = np.array([])
+elements = np.array([])
+BCs = np.array([])
+loads = np.array([])
 
 filepath = "model 1.txt"
 with open(filepath, "r") as f:
