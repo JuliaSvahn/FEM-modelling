@@ -1,3 +1,6 @@
+import math
+import numpy as np
+import os
 def solve_gsm(K, F, fixed_dofs):
     """
     Solving GSM system for displacements and reactions.

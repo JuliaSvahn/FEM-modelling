@@ -1,3 +1,6 @@
+import math
+import numpy as np
+import os
 def postprocess(U, F, K, L, Trans, E):
     """
     Post-process the results of a finite element analysis.
