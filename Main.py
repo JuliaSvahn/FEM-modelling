@@ -10,10 +10,10 @@ import Post_prosessing
 
 
 
-nodes = np.array([])
-elements = np.array([])
-BCs = np.array([])
-loads = np.array([])
+nodes = {}
+elements = {}
+BCs = {}
+loads = {}
 
 filepath = "model 1.txt"
 with open(filepath, "r") as f:
@@ -68,8 +68,8 @@ with open(filepath, "r") as f:
 # calculations
 
 # getting the length for each element then using element stiffness matrix
-element_lengths = np.array([])
-element_angles = np.array([])
+element_lengths = {}
+element_angles = {}
 rotation_matrices = {}
 k_local_list = []
 
@@ -88,11 +88,19 @@ for elid, element in elements.items():
 
     element_lengths[elid] = L
 
-
+    K_local, k_local_4x4 = ESM.local_ESM(E, area, L)
+    
     T, theta = Rotation_matrix.Rotation(x1, x2, y1, y2)
     rotation_matrices[elid] = T
     element_angles[elid] = theta
 
     k_local_list.append(T @ k_local_4x4 @ T.T)
 
-k_global = GSM.GSM_assembly(elements, nodes, dof_node = 2, ) #hello
+# now that we are done with bullshit lists its time for the real programming
+# Convert each dict's values into a 2D NumPy array
+nodes = np.array(list(nodes.values()))
+elements = np.array(list(elements.values()))
+BCs = np.array(list(BCs.values()))
+loads = np.array(list(loads.values()))
+
+k_global = GSM.GSM_assembly(elements, nodes, k_local_list, dof_node = 2) #hello
