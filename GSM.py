@@ -37,3 +37,22 @@ def assemble_truss_stiffness(nodes, elements, E, A, dof_node=2):
 
     K = GSM_assembly(elements, nodes, dof_node, K_global_list)
     return np.asarray(K, dtype=float)
+
+def GSM_assembly(elements, nodes, K_local, dof_node):
+    """
+    Function assembling Global Stiffness Matrix (GSM) for a 2D truss structure.
+    From other codes we have the element stiffness matrices, this code assembles them.
+    """
+    n_dof = dof_node * len(nodes)  # Total degrees of freedom + no of col's and rows in GSM
+
+    K = np.zeros((n_dof, n_dof))  # Initialize the global stiffness matrix (square)
+
+    for e, (i, j) in enumerate(elements):
+        # Global DOF numbers of this element: node n owns DOFs n*dof_node ... n*dof_node + dof_node - 1
+        dofs = np.concatenate([np.arange(i * dof_node, (i + 1) * dof_node),
+                               np.arange(j * dof_node, (j + 1) * dof_node)])
+
+        # Scatter-add the element matrix into the right rows/columns
+        K[np.ix_(dofs, dofs)] += K_local[e]
+
+    return K
