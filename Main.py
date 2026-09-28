@@ -68,7 +68,7 @@ with open(filepath, "r") as f:
 # calculations
 
 # getting the length for each element then using element stiffness matrix
-element_lengths = {}
+element_lengths = mp.array([])
 element_angles = np.array([])
 rotation_matrices = {}
 k_local_list = []
