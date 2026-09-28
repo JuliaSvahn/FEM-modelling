@@ -91,4 +91,4 @@ for elid, element in elements.items():
 
     element_angles[elid] = theta
 
-k_global = modelling.GSM.GSM_assembly(elements, nodes, dof_node = 2, )
+k_global = modelling.GSM.GSM_assembly(elements, nodes, dof_node = 2, ) #hello
