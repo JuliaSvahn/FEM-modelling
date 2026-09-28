@@ -104,3 +104,5 @@ BCs = np.array(list(BCs.values()))
 loads = np.array(list(loads.values()))
 
 k_global = GSM.GSM_assembly(elements, nodes, k_local_list, dof_node = 2) #hello
+
+u, RF = Solve_system.solve_gsm(k_global, loads, BCs[:, 1:])
