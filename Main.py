@@ -89,10 +89,10 @@ for elid, element in elements.items():
     element_lengths[elid] = L
 
 
-    T, theta = modelling.Rotation_matrix.Rotation(x1, x2, y1, y2)
+    T, theta = Rotation_matrix.Rotation(x1, x2, y1, y2)
     rotation_matrices[elid] = T
     element_angles[elid] = theta
 
     k_local_list.append(T @ k_local_4x4 @ T.T)
 
-k_global = modelling.GSM.GSM_assembly(elements, nodes, dof_node = 2, ) #hello
+k_global = GSM.GSM_assembly(elements, nodes, dof_node = 2, ) #hello
