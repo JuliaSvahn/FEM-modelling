@@ -1,3 +1,6 @@
+import math
+import numpy as np
+import os
 def local_ESM(E, A, L):
     """
     Calculate the local coordinate system element stiffness matrix for a 2D truss element.
@@ -13,6 +16,8 @@ def local_ESM(E, A, L):
     Returns:
     K_local : numpy.ndarray [2x2]
         local stiffness matrix of element
+    k_local_4x4 : numpy.ndarray [4x4]
+        local stiffness matrix of element in 4x4 format for global assembly
     """
     
     #Guard to make sure we don't accidentally divide by 0

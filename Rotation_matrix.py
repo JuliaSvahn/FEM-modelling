@@ -11,6 +11,7 @@ def Rotation(x1, x2, y1, y2):
     
     returns:
     rotation_matrix: 4x4 numpy array representing the rotation matrix
+    theta: angle of rotation in radians
     """
 
     dy = y2-y1
@@ -22,4 +23,4 @@ def Rotation(x1, x2, y1, y2):
                                       [0, 0, np.cos(theta), -np.sin(theta)],
                                       [0, 0, np.sin(theta), np.cos(theta)]])
 
-    return rotation_matrix
+    return rotation_matrix, theta
