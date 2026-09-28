@@ -1,3 +1,7 @@
+import math
+import numpy as np
+import os
+
 def transform_to_global(K_local, c, s):
     """
     Rotate a 2x2 local (axial) element stiffness matrix into the
