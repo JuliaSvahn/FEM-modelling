@@ -16,7 +16,7 @@ def Rotation(x1, x2, y1, y2):
 
     dy = y2-y1
     dx = x2-x1
-    theta = np.arctan(dy/dx)
+    theta = np.arctan2(dy, dx)
 
     rotation_matrix = np.array([[np.cos(theta), -np.sin(theta), 0, 0], 
                                       [np.sin(theta), np.cos(theta), 0, 0],
