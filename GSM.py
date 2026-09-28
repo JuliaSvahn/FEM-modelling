@@ -32,4 +32,4 @@ def assemble_truss_stiffness(nodes, elements, E, A, dof_node=2):
         K_global_list.append(K_global_e)
 
     K = GSM_assembly(elements, nodes, dof_node, K_global_list)
-    return K
+    return np.asarray(K, dtype=float)
