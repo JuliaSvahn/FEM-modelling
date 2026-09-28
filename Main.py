@@ -88,12 +88,6 @@ for elid, element in elements.items():
 
     element_lengths[elid] = L
 
-    k_local = modelling.ESM.local_ESM(E, area, L)
-    k_local_4x4 = np.zeros((4, 4))
-    k_local_4x4[0, 0] = k_local[0, 0]
-    k_local_4x4[0, 2] = k_local[0, 1]
-    k_local_4x4[2, 0] = k_local[1, 0]
-    k_local_4x4[2, 2] = k_local[1, 1]
 
     T, theta = modelling.Rotation_matrix.Rotation(x1, x2, y1, y2)
     rotation_matrices[elid] = T

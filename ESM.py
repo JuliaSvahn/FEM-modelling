@@ -22,8 +22,16 @@ def local_ESM(E, A, L):
     # Calculate the stiffness coefficient
     k = (E * A) / L
 
+
+
     # Define the local stiffness matrix for a 2D truss element
     K_local = np.array([[ k, -k],
                         [-k,  k]])
 
-    return K_local
+    k_local_4x4 = np.zeros((4, 4))
+    k_local_4x4[0, 0] = K_local[0, 0]
+    k_local_4x4[0, 2] = K_local[0, 1]
+    k_local_4x4[2, 0] = K_local[1, 0]
+    k_local_4x4[2, 2] = K_local[1, 1]
+
+    return K_local, k_local_4x4
