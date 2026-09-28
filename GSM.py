@@ -46,13 +46,16 @@ def GSM_assembly(elements, nodes, K_local, dof_node):
     n_dof = dof_node * len(nodes)  # Total degrees of freedom + no of col's and rows in GSM
 
     K = np.zeros((n_dof, n_dof))  # Initialize the global stiffness matrix (square)
+  
 
-    for e, (i, j) in enumerate(elements):
+    for element, (elid, first_node, second_node, E, poisson, area) in enumerate(elements):
         # Global DOF numbers of this element: node n owns DOFs n*dof_node ... n*dof_node + dof_node - 1
-        dofs = np.concatenate([np.arange(i * dof_node, (i + 1) * dof_node),
-                               np.arange(j * dof_node, (j + 1) * dof_node)])
+        first_node = int(first_node) - 1
+        second_node = int(second_node) - 1 #to account for zero-based indexing
+        dofs = np.concatenate([np.arange(first_node * dof_node, (first_node + 1) * dof_node),
+                               np.arange(second_node * dof_node, (second_node + 1) * dof_node)])
 
-        # Scatter-add the element matrix into the right rows/columns
-        K[np.ix_(dofs, dofs)] += K_local[e]
+        # Scatter-add the element matrix into the right rows/c  olumns
+        K[np.ix_(dofs, dofs)] += K_local[element]
 
     return K
