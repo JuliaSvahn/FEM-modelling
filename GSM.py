@@ -2,6 +2,9 @@ import math
 import numpy as np
 import os
 
+from ESM import local_ESM
+from Rotation_matrix import Rotation
+
 def assemble_truss_stiffness(nodes, elements, E, A, dof_node=2):
     """
     nodes    : array-like (n_nodes, 2)        -> [x, y] per node
