@@ -73,7 +73,7 @@ n_dof = 2 * len(nodes)
 # Convert each dict's values into a 2D NumPy array
 nodes_arr = np.array(list(nodes.values()))
 elements_table = np.array(list(elements.values()))
-elements_arr = elements_table[:, :2] - 1
+elements_arr = elements_table[:, :2].astype(int) - 1
 E_arr = elements_table[:, 2]
 A_arr = elements_table[:, 4]
 
@@ -87,16 +87,25 @@ for nodeid, (forcex, forcey) in loads.items():
     F[2 * i + 1] += forcey
 
 fixedBC = []
-for nodeid, (BCx, BCy) in BC.items():
+for nodeid, (BCx, BCy) in BCs.items():
     i = nodeid - 1
     if BCx == 1:
         fixedBC.append(2 * i)
     if BCy == 1:
         fixedBC.append( 2 * i + 1)
 
-u, RF = Solve_system.solve_gsm(k_global, loads, BCs[:, 1:])
+u, RF = Solve_system.solve_gsm(k_global, F, fixedBC)
 
-R, stress, strain = Post_prosessing.postprocess(u, F, k_global, nodes_arr, elements_arr, E_arr)
+L_arr = []
+T_list = []
+for i, j in elements_arr:
+    x1, y1 = nodes_arr[i]
+    x2, y2 = nodes_arr[j]
+    L_arr.append(np.hypot(x2 - x1, y2 - y1))
+    T, theta = Rotation_matrix.Rotation(x1, x2, y1, y2)
+    T_list.append(T)
+
+R, stress, strain = Post_prosessing.postprocess(u, F, k_global, L_arr, T_list, E_arr, elements_arr)
 
 print("Displacement: ", u)
 print("Reaction forces: ", R)
