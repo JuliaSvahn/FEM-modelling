@@ -1,4 +1,4 @@
-def postprocess(U, F, K, L, Trans, E):
+def postprocess(U, F, K, L, Trans, E, elements):
     """
     Post-process the results of a finite element analysis.
     U: Displacement np.array
