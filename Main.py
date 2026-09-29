@@ -107,7 +107,7 @@ for i, j in elements_arr:
 
 R, stress, strain = Post_prosessing.postprocess(u, F, k_global, L_arr, T_list, E_arr, elements_arr)
 
-print("Displacement: ", u)
+print("Displacement [mm]: ", u)
 print("Reaction forces: ", R)
 print("Stresses: ", stress)
 print("Strains: ", strain)
